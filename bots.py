@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
 import numpy as np
-from tronproblem import *
+from tronproblem import TronProblem
 from trontypes import CellType, PowerupType
 import random, math
-from utils.heurstic import voronoi_heuristic, space_fill_heursitic
+from utils.minimax import alpha_beta_cutoff
 
 # Throughout this file, ASP means adversarial search problem.
 
@@ -20,7 +20,7 @@ class StudentBot:
         To get started, you can get the current
         state by calling asp.get_start_state()
         """
-        return "U"
+        return alpha_beta_cutoff(asp, 5)
 
     def cleanup(self):
         """

@@ -69,3 +69,8 @@ def voronoi_heuristic(tron_state):
 
 def space_fill_heursitic():
     pass
+
+
+def heuristic_func(tron_state):
+    pass
+    # Combine vornoi and space fill heuristics. Must be between 0 and 1.
