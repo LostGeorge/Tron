@@ -67,10 +67,16 @@ def voronoi_heuristic(tron_state):
 
 
 
-def space_fill_heursitic():
+def space_fill_heursitic(tron_state):
     pass
 
 
 def heuristic_func(tron_state):
-    pass
-    # Combine vornoi and space fill heuristics. Must be between 0 and 1.
+    # Combine vornoi and space fill heuristics. Must be between 0 and 1 and account for player.
+    x = len(tron_state.board) - 2
+    y = len(tron_state.board[0]) - 2
+    board_size = x * y
+    board_space = 2*x + 2*y
+
+    return (board_space/space_fill_heursitic(tron_state) * 
+        (voronoi_heuristic(tron_state) / board_size) + 1)/2
