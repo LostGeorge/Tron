@@ -20,4 +20,4 @@ tron_st = TronState(board, player_locs, 1, {})
 
 # print(voronoi_heuristic(tron_st))
 print(space_fill_heursitic(tron_st))
-
+    
