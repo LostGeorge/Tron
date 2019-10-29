@@ -70,25 +70,24 @@ def voronoi_heuristic(tron_state):
 def space_fill_heursitic(tron_state):
     board = tron_state.board
     count = 0
+    delim = ["#"]
     for row in range(1, len(board) - 1):
         for col in range(1, len(board[row]) - 1):
-            internal_count = 0
-            for i in range(row - 1, row + 1):
-                for j in range(col - 1, col + 1):
-                    if i == row and j == col:
-                        if board[i - 1][j - 1] == "#" and board[i - 1][j] == "#" and board[i][j - 1] == "#":
-                            count += 1
-                        elif board[i - 1][j + 1] == "#" and board[i - 1][j] == "#" and board[i][j + 1] == "#":
-                            count += 1
-                        elif board[i][j - 1] == "#" and board[i + 1][j - 1] == "#" and board[i + 1][j] == "#":
-                            count += 1
-                        elif board[i + 1][j] == "#" and board[i + 1][j + 1] == "#" and board[i][j + 1] == "#":
-                            count += 1
-                    else:
-                        if board[i][j] == "#":
-                            internal_count += 1
-                        
-            if internal_count == 1: 
+            if board[row - 1][col - 1] in delim and board[row - 1][col] in delim and board[row][col - 1] in delim:
+                count += 1
+            elif board[row + 1][col -1] in delim and board[row + 1][col] in delim and board[row][col - 1] in delim:
+                count += 1
+            elif board[row - 1][col + 1] in delim and board[row - 1][col] in delim and board[row][col + 1] in delim:
+                count += 1
+            elif board[row + 1][col + 1] in delim and board[row + 1][col] in delim and board[row][col + 1] in delim:
+                count += 1
+            elif board[row - 1][col - 1] in delim and board[row - 1][col] == " " and board[row][col - 1] == " ":
+                count += 1
+            elif board[row + 1][col -1] in delim and board[row + 1][col] == " " and board[row][col - 1] == " ":
+                count += 1
+            elif board[row - 1][col + 1] in delim and board[row - 1][col] == " " and board[row][col + 1] == " ":
+                count += 1
+            elif board[row + 1][col + 1] in delim and board[row + 1][col] == " " and board[row][col + 1] == " ":
                 count += 1
     return count + 2
 
