@@ -18,6 +18,16 @@ def action_move(loc, move):
     return loc
 
 
+def determine_players(tron_state):
+    if tron_state.ptm == 0:
+        p1_loc = tron_state.player_locs[0]
+        p2_loc = tron_state.player_locs[1]
+    else:
+        p1_loc = tron_state.player_locs[1]
+        p2_loc = tron_state.player_locs[0]
+    return [p1_loc, p2_loc]
+    
+
 def voronoi_heuristic(tron_state):
     '''
     Calculates the difference between "zones of control" as defined
@@ -62,16 +72,6 @@ def voronoi_heuristic(tron_state):
         p2_f = n_p2_f
     
     return len(p1_visited) - len(p2_visited)
-
-
-def determine_players(tron_state):
-    if tron_state.ptm == 0:
-        p1_loc = tron_state.player_locs[0]
-        p2_loc = tron_state.player_locs[1]
-    else:
-        p1_loc = tron_state.player_locs[1]
-        p2_loc = tron_state.player_locs[0]
-    return [p1_loc, p2_loc]
 
 
 def space_fill_heursitic(tron_state):
