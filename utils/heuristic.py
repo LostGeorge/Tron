@@ -25,12 +25,10 @@ def voronoi_heuristic(tron_state):
     or p2 first.
     '''
     # We make it so that p1 is the player to move and p2 is opponent
-    if tron_state.ptm == 0:
-        p1_loc = tron_state.player_locs[0]
-        p2_loc = tron_state.player_locs[1]
-    else:
-        p1_loc = tron_state.player_locs[1]
-        p2_loc = tron_state.player_locs[0]
+
+    player_locs = determine_players(tron_state)
+    p1_loc = player_locs[0]
+    p2_loc = player_locs[1]
 
     board = tron_state.board
 
@@ -66,11 +64,22 @@ def voronoi_heuristic(tron_state):
     return len(p1_visited) - len(p2_visited)
 
 
+def determine_players(tron_state):
+    if tron_state.ptm == 0:
+        p1_loc = tron_state.player_locs[0]
+        p2_loc = tron_state.player_locs[1]
+    else:
+        p1_loc = tron_state.player_locs[1]
+        p2_loc = tron_state.player_locs[0]
+    return [p1_loc, p2_loc]
+
 
 def space_fill_heursitic(tron_state):
     board = tron_state.board
+    player_locs = determine_players(tron_state)
     count = 0
-    delim = ["#"]
+    print(player_locs[1])
+    delim = ["#", "x", player_locs[1]]
     for row in range(1, len(board) - 1):
         for col in range(1, len(board[row]) - 1):
             if board[row - 1][col - 1] in delim and board[row - 1][col] in delim and board[row][col - 1] in delim:
@@ -89,7 +98,7 @@ def space_fill_heursitic(tron_state):
                 count += 1
             elif board[row + 1][col + 1] in delim and board[row + 1][col] == " " and board[row][col + 1] == " ":
                 count += 1
-    return count + 2
+    return count
 
 
 
