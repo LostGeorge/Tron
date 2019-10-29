@@ -99,6 +99,23 @@ def space_fill_heursitic(tron_state):
                 count += 1
     return count
 
+def space_fill_heursitic2(tron_state):
+    count = 0
+    barriers = set(['#', 'x', '1', '2'])
+    for i in range(len(tron_state.board) - 1):
+        for j in range(len(tron_state.board[0]) - 1):
+            if tron_state.board[i][j] == ' ':
+                if tron_state.board[i][j+1] in barriers:
+                    count += 1
+                if tron_state.board[i+1][j] in barriers:
+                    count += 1
+            elif tron_state.board[i][j] in barriers:
+                if tron_state.board[i][j+1] == ' ':
+                    count += 1
+                if tron_state.board[i+1][j] == ' ':
+                    count += 1
+    
+    return count
 
 
 
@@ -107,7 +124,8 @@ def heuristic_func(tron_state):
     x = len(tron_state.board) - 2
     y = len(tron_state.board[0]) - 2
     board_size = x * y
-    board_space = 2*x + 2*y
+    #board_space = 2*x + 2*y
+    init_corners = 4
 
-    return (board_space/space_fill_heursitic(tron_state) * 
+    return (init_corners/space_fill_heursitic(tron_state) * 
         (voronoi_heuristic(tron_state) / board_size) + 1)/2
