@@ -12,6 +12,9 @@ from utils.minimax import alpha_beta_cutoff
 class StudentBot:
     """ Write your student bot here"""
 
+    def __init__(self):
+        self.BOT_NAME = "Bot or feed"
+
     def decide(self, asp):
         """
         Input: asp, a TronProblem
@@ -20,7 +23,7 @@ class StudentBot:
         To get started, you can get the current
         state by calling asp.get_start_state()
         """
-        return alpha_beta_cutoff(asp, 5)
+        return alpha_beta_cutoff(asp, 6)
 
     def cleanup(self):
         """
