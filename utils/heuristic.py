@@ -76,10 +76,8 @@ def determine_players(tron_state):
 
 def space_fill_heursitic(tron_state):
     board = tron_state.board
-    player_locs = determine_players(tron_state)
     count = 0
-    print(player_locs[1])
-    delim = ["#", "x", player_locs[1]]
+    delim = ["#", "x", "2"]
     for row in range(1, len(board) - 1):
         for col in range(1, len(board[row]) - 1):
             if board[row - 1][col - 1] in delim and board[row - 1][col] in delim and board[row][col - 1] in delim:
