@@ -3,6 +3,8 @@ from tronproblem import TronProblem
 from queue import Queue
 
 
+barriers = set(['#', 'x', '1', '2'])
+
 def action_move(loc, move):
     '''
     Helper function to get the coordinates of the result of an action
@@ -74,7 +76,7 @@ def voronoi_heuristic(tron_state):
     return len(p1_visited) - len(p2_visited)
 
 
-def space_fill_heursitic(tron_state):
+def space_fill_heuristic(tron_state):
     board = tron_state.board
     count = 0
     delim = ["#", "x", "2", "1"]
@@ -99,9 +101,9 @@ def space_fill_heursitic(tron_state):
                 count += 1
     return count
 
-def space_fill_heursitic2(tron_state):
+def space_fill_heuristic2(tron_state):
     count = 0
-    barriers = set(['#', 'x', '1', '2'])
+
     for i in range(len(tron_state.board) - 1):
         for j in range(len(tron_state.board[0]) - 1):
             if tron_state.board[i][j] not in barriers:
@@ -109,7 +111,20 @@ def space_fill_heursitic2(tron_state):
                     count += 1
                 if tron_state.board[i+1][j] in barriers:
                     count += 1
-            elif tron_state.board[i][j] in barriers:
+            else:
+                if tron_state.board[i][j+1] not in barriers:
+                    count += 1
+                if tron_state.board[i+1][j] not in barriers:
+                    count += 1
+    
+    return count
+
+def space_fill_heuristic3(tron_state):
+    count = 0
+    
+    for i in range(1, len(tron_state.board) - 2):
+        for j in range(1, len(tron_state.board[0]) - 2):
+            if tron_state.board[i][j] not in barriers:
                 if tron_state.board[i][j+1] not in barriers:
                     count += 1
                 if tron_state.board[i+1][j] not in barriers:
@@ -118,14 +133,16 @@ def space_fill_heursitic2(tron_state):
     return count
 
 
-
 def heuristic_func(tron_state):
     # Combine vornoi and space fill heuristics. Must be between 0 and 1 and account for player.
     x = len(tron_state.board) - 2
     y = len(tron_state.board[0]) - 2
     board_size = x * y
-    board_space = 2*x + 2*y
-    #init_corners = 4
+    #board_space = 2*x + 2*y
+    board_space = (x - 1) * (y - 1)
 
-    return (board_space/space_fill_heursitic2(tron_state) * 
-        (voronoi_heuristic(tron_state) / board_size) + 1)/2
+    #return board_space/space_fill_heuristic2(tron_state) * \
+    #    (voronoi_heuristic(tron_state) / board_size + 1)**2/4
+    return space_fill_heuristic3(tron_state)/board_space * \
+        (voronoi_heuristic(tron_state) / board_size + 1)**2/4
+

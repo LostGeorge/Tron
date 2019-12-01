@@ -1,5 +1,6 @@
 from .heuristic import heuristic_func
 
+
 def max_transition(asp, state, start_player, alpha=None, beta=None, cutoff=None, eval_f=None):
 	if asp.is_terminal_state(state):
 		return (asp.evaluate_state(state)[start_player], None)
@@ -50,6 +51,8 @@ def min_transition(asp, state, start_player, alpha=None, beta=None, cutoff=None,
 def alpha_beta_cutoff(asp, cutoff_ply):
 	start_state = asp.get_start_state()
 	start_player = start_state.player_to_move()
-	return max_transition(asp, start_state, start_player, alpha=float('-inf'), beta=float('inf'),
-		cutoff=cutoff_ply, eval_f=heuristic_func)[1]
+	val, move = max_transition(asp, start_state, start_player, alpha=float('-inf'), beta=float('inf'),
+		cutoff=cutoff_ply, eval_f=heuristic_func)
+
+	return move
 

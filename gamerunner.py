@@ -60,8 +60,8 @@ They will go UP this round."""
 
 
 def main():
-    random.seed(1)
-    np.random.seed(1)
+    #random.seed(1)
+    #np.random.seed(1)
 
     parser = argparse.ArgumentParser(prog="gamerunner", usage="%(prog)s [options]")
     parser.add_argument(
