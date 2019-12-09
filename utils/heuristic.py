@@ -1,7 +1,4 @@
-import numpy as np
 from tronproblem import TronProblem
-from queue import Queue
-
 
 barriers = set(['#', 'x', '1', '2'])
 
@@ -75,51 +72,7 @@ def voronoi_heuristic(tron_state):
     
     return len(p1_visited) - len(p2_visited)
 
-
 def space_fill_heuristic(tron_state):
-    board = tron_state.board
-    count = 0
-    delim = ["#", "x", "2", "1"]
-    for row in range(1, len(board) - 1):
-        for col in range(1, len(board[row]) - 1):
-            # if board[row][col] not in delim:
-            if board[row - 1][col - 1] in delim and board[row - 1][col] in delim and board[row][col - 1] in delim:
-                count += 1
-            elif board[row + 1][col -1] in delim and board[row + 1][col] in delim and board[row][col - 1] in delim:
-                count += 1
-            elif board[row - 1][col + 1] in delim and board[row - 1][col] in delim and board[row][col + 1] in delim:
-                count += 1
-            elif board[row + 1][col + 1] in delim and board[row + 1][col] in delim and board[row][col + 1] in delim:
-                count += 1
-            elif board[row - 1][col - 1] in delim and board[row - 1][col] == " " and board[row][col - 1] == " ":
-                count += 1
-            elif board[row + 1][col -1] in delim and board[row + 1][col] == " " and board[row][col - 1] == " ":
-                count += 1
-            elif board[row - 1][col + 1] in delim and board[row - 1][col] == " " and board[row][col + 1] == " ":
-                count += 1
-            elif board[row + 1][col + 1] in delim and board[row + 1][col] == " " and board[row][col + 1] == " ":
-                count += 1
-    return count
-
-def space_fill_heuristic2(tron_state):
-    count = 0
-
-    for i in range(len(tron_state.board) - 1):
-        for j in range(len(tron_state.board[0]) - 1):
-            if tron_state.board[i][j] not in barriers:
-                if tron_state.board[i][j+1] in barriers:
-                    count += 1
-                if tron_state.board[i+1][j] in barriers:
-                    count += 1
-            else:
-                if tron_state.board[i][j+1] not in barriers:
-                    count += 1
-                if tron_state.board[i+1][j] not in barriers:
-                    count += 1
-    
-    return count
-
-def space_fill_heuristic3(tron_state):
     count = 0
     
     for i in range(1, len(tron_state.board) - 2):
@@ -138,11 +91,8 @@ def heuristic_func(tron_state):
     x = len(tron_state.board) - 2
     y = len(tron_state.board[0]) - 2
     board_size = x * y
-    #board_space = 2*x + 2*y
-    board_space = (x - 1) * (y - 1)
+    board_space = 2 * (x - 1) * (y - 1)
 
-    #return board_space/space_fill_heuristic2(tron_state) * \
-    #    (voronoi_heuristic(tron_state) / board_size + 1)**2/4
-    return space_fill_heuristic3(tron_state)/board_space * \
+    return space_fill_heuristic(tron_state)/board_space * \
         (voronoi_heuristic(tron_state) / board_size + 1)**2/4
 
